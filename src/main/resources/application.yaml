@@ -1,4 +1,8 @@
 spring:
+  profiles:
+    active: dev
+    group:
+      dev: dev, dev-keycloak
   application:
     name: smit.proovitoo
   datasource:
@@ -8,6 +12,12 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.yaml
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:7080/auth/realms/books
+          jwk-set-uri: http://localhost:7080/auth/realms/books/protocol/openid-connect/certs
 
 springdoc:
   api-docs.path: /v3/api-docs
