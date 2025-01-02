@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: smit.proovitoo
+  datasource:
+    url: jdbc:postgresql://localhost:32768/books
+    username: myuser
+    password: secret
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
