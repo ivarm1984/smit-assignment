@@ -1,4 +1,4 @@
-package ee.ivar.smit.proovitoo;
+package ee.ivar.smit.proovitoo.book;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package ee.ivar.smit.proovitoo;
+package ee.ivar.smit.proovitoo.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package ee.ivar.smit.proovitoo;
+package ee.ivar.smit.proovitoo.book;
 
 import lombok.Builder;
 import lombok.Getter;
