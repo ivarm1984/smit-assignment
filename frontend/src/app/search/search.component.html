@@ -1,2 +1,16 @@
 
 <p>search works!</p>
+<form [formGroup]="searchForm" (ngSubmit)="search()">
+  <label>
+    <input type="text" formControlName="searchTerm" />
+  </label>
+  <button type="submit">Search</button>
+</form>
+
+
+<ul>
+  @for (book of books; track book.title) {
+    <strong>{{ book.title }}</strong> by {{ book.author }}
+
+  }
+</ul>

@@ -3,6 +3,8 @@ import { provideRouter } from '@angular/router';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { initializeKeycloak } from './keycloak-init';
 import { routes } from './app.routes';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { AuthInterceptor } from './auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
@@ -12,5 +14,10 @@ export const appConfig: ApplicationConfig = {
           useFactory: initializeKeycloak,
           multi: true,
           deps: [KeycloakService]
-        }, KeycloakService]
+        }, KeycloakService, provideHttpClient(withInterceptorsFromDi()),
+          {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true,
+          },]
 };
