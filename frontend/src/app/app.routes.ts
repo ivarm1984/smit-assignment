@@ -2,8 +2,6 @@ import { Routes } from '@angular/router';
 import {SearchComponent} from './search/search.component';
 import {BookActivityComponent} from './book-activity/book-activity.component';
 
-
-
 export const routes: Routes = [
     {
       path: '',
@@ -13,5 +11,5 @@ export const routes: Routes = [
     {
       path: 'book-activity',
       title: 'Book Activity',
-      component: BookActivityComponent,
+      component: BookActivityComponent
     },];

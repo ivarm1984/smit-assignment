@@ -71,7 +71,7 @@ public class KeycloakConfig {
         client.setEnabled(true);
         client.setDirectAccessGrantsEnabled(true);
         client.setPublicClient(true);
-        client.setRedirectUris(List.of("http://localhost:8080/*"));
+        client.setRedirectUris(List.of("http://localhost:8080/*", "http://localhost:4200/*"));
         client.setWebOrigins(List.of("*"));
         client.setProtocol("openid-connect");
         keycloak.realm("books").clients().create(client);
@@ -81,6 +81,6 @@ public class KeycloakConfig {
         if (keycloak.realms().findAll() == null) {
             return false;
         }
-        return keycloak.realms().findAll().stream().anyMatch(realm -> "books".equals(realm.getDisplayName()));
+        return keycloak.realms().findAll().stream().anyMatch(realm -> "books".equals(realm.getRealm()));
     }
 }
