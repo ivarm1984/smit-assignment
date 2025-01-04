@@ -6,7 +6,7 @@ services:
       - 'POSTGRES_PASSWORD=secret'
       - 'POSTGRES_USER=myuser'
     ports:
-      - '5432'
+      - '53447:5432'
   keycloak_web:
     image: quay.io/keycloak/keycloak:24.0
     container_name: keycloak_web

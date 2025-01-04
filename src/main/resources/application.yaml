@@ -6,7 +6,7 @@ spring:
   application:
     name: smit.proovitoo
   datasource:
-    url: jdbc:postgresql://localhost:32768/books
+    url: jdbc:postgresql://localhost:53447/books
     username: myuser
     password: secret
   liquibase:

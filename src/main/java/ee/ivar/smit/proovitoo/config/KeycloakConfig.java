@@ -29,7 +29,7 @@ public class KeycloakConfig {
                 .password("admin")
                 .build();
 
-        if (keycloak.realms().findAll().stream().anyMatch(realm -> realm.getDisplayName().equals("books"))) {
+        if (booksRealmExists(keycloak)) {
             return;
         }
 
@@ -75,5 +75,12 @@ public class KeycloakConfig {
         client.setWebOrigins(List.of("*"));
         client.setProtocol("openid-connect");
         keycloak.realm("books").clients().create(client);
+    }
+
+    private static boolean booksRealmExists(Keycloak keycloak) {
+        if (keycloak.realms().findAll() == null) {
+            return false;
+        }
+        return keycloak.realms().findAll().stream().anyMatch(realm -> "books".equals(realm.getDisplayName()));
     }
 }
