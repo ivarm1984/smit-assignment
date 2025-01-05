@@ -30,7 +30,7 @@ public class DevData {
 
     @PostConstruct
     public void postConstruct() {
-        log.info("Setting up keycloak");
+        log.info("Setting up keycloak dev data");
         Keycloak keycloak = KeycloakBuilder.builder()
                 .serverUrl("http://localhost:7080")
                 .realm("master")
