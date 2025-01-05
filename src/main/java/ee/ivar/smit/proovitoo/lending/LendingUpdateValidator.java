@@ -43,10 +43,10 @@ public class LendingUpdateValidator {
         if (request.status() == DELETED && currentUser.getId().equals(owner.getId())) {
             return true;
         }
-        if (request.status() == LENT_OUT && currentUser.getId().equals(lender.getId())) {
+        if (request.status() == LENT_OUT && currentUser.getId().equals(owner.getId())) {
             return true;
         }
-        if (request.status() == RECEIVED && currentUser.getId().equals(owner.getId())) {
+        if (request.status() == RECEIVED && currentUser.getId().equals(lender.getId())) {
             return true;
         }
         if (request.status() == GIVEN_BACK && currentUser.getId().equals(lender.getId())) {

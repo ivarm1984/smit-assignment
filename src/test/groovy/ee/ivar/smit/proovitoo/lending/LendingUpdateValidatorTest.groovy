@@ -87,4 +87,52 @@ class LendingUpdateValidatorTest extends Specification {
         GIVEN_BACK | GIVEN_BACK | false
         GIVEN_BACK | GOT_BACK   | true
     }
+
+    def "should allow lender status changes"() {
+        given:
+        def request = new LendingStatusUpdateRequest(1, to)
+        def lending = new LendingEntity(user: new UserEntity(id: 2),
+                status: from,
+                book: new BookEntity(user: new UserEntity(id: 1)))
+        userService.currentUser >> new UserEntity(id: 2)
+
+        when:
+        def result = lendingUpdateValidator.isValidUpdate(request, lending)
+
+        then:
+        result == expectedResult
+
+        where:
+        from       | to         | expectedResult
+        BOOKED     | DELETED    | false
+        BOOKED     | CANCELLED  | true
+        BOOKED     | LENT_OUT   | false
+        LENT_OUT   | RECEIVED   | true
+        RECEIVED   | GIVEN_BACK | true
+        GIVEN_BACK | GOT_BACK   | false
+    }
+
+    def "should allow owner status changes"() {
+        given:
+        def request = new LendingStatusUpdateRequest(1, to)
+        def lending = new LendingEntity(user: new UserEntity(id: 1),
+                status: from,
+                book: new BookEntity(user: new UserEntity(id: 2)))
+        userService.currentUser >> new UserEntity(id: 2)
+
+        when:
+        def result = lendingUpdateValidator.isValidUpdate(request, lending)
+
+        then:
+        result == expectedResult
+
+        where:
+        from       | to         | expectedResult
+        BOOKED     | DELETED    | true
+        BOOKED     | CANCELLED  | false
+        BOOKED     | LENT_OUT   | true
+        LENT_OUT   | RECEIVED   | false
+        RECEIVED   | GIVEN_BACK | false
+        GIVEN_BACK | GOT_BACK   | true
+    }
 }
