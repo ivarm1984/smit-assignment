@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-search',
@@ -19,12 +20,12 @@ export class SearchComponent {
     searchTerm: new FormControl<string>('', [Validators.required]),
   });
 
-  constructor(private bookService: BookService) {}
+  constructor(private bookService: BookService, private toastr: ToastrService) {}
 
   search(): void {
     this.bookService.search(this.searchForm.get('searchTerm')!.value!).subscribe(
       (data: Book[]) => (this.books = data),
-      (error: HttpErrorResponse) => console.error('Error fetching books:', error)
+      (error: HttpErrorResponse) => this.toastr.error('Error fetching books')
     );
   }
 }
