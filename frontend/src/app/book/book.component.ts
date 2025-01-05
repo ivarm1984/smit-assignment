@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BookService, Book } from '../service/book.service';
+import { LendingService, Lending } from '../service/lending.service';
 import { HttpClientModule, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -16,6 +17,7 @@ export class BookComponent {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
+    private lendingService: LendingService,
     private bookService: BookService) {}
 
   ngOnInit(): void {
@@ -24,6 +26,17 @@ export class BookComponent {
       (data: Book) => (this.book = data),
       (error: HttpErrorResponse) => console.error('Error fetching book:', error)
     );
+  }
+
+  lendBook() {
+    this.lendingService.lend(this.book.id!).subscribe({
+     next: () => {
+       this.router.navigate(['lendings']);
+     },
+     error: (err) => {
+       console.error(`Failed to delete book with id ${this.book.id}`, err);
+     }
+   });
   }
 
   deleteBook() {

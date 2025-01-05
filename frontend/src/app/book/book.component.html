@@ -6,4 +6,6 @@
 
 @if (book.belongsToUser) {
   <button (click)="deleteBook()">Delete book</button>
+} @else {
+  <button (click)="lendBook()">Lend book</button>
 }

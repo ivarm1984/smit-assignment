@@ -21,7 +21,7 @@ export const routes: Routes = [
         component: BookCreateComponent
       },
     {
-      path: 'book-activity',
-      title: 'Book Activity',
+      path: 'lendings',
+      title: 'Lendings',
       component: BookActivityComponent
     },];

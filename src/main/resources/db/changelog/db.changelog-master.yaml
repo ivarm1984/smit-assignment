@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/changeset/user.sql
   - include:
       file: db/changelog/changeset/book.sql
+  - include:
+      file: db/changelog/changeset/lending.sql
