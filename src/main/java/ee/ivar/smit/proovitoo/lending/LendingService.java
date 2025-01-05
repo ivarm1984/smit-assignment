@@ -23,6 +23,7 @@ public class LendingService {
     private final UserService userService;
     private final LendingRepository lendingRepository;
     private final BookRepository bookRepository;
+    private final LendingUpdateValidator lendingUpdateValidator;
 
     public List<LendingEntity> getLendings() {
         return lendingRepository.findAllByOwnerOrLender(userService.getCurrentUser().getId(), FINAL_STATUSES);
@@ -44,6 +45,9 @@ public class LendingService {
 
     public void updateStatus(LendingStatusUpdateRequest request) {
         LendingEntity lending = lendingRepository.getReferenceById(request.id());
+        if (!lendingUpdateValidator.isValidUpdate(request, lending)) {
+            throw new LendingException("Status cannot be update!");
+        }
         lending.setStatus(request.status());
         lendingRepository.save(lending);
     }
