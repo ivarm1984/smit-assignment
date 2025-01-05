@@ -3,7 +3,9 @@ package ee.ivar.smit.proovitoo.book;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,20 +20,26 @@ public class BooksController {
 
     @GetMapping
     public List<BookResource> getBooks() {
-        return bookRepository.findAll().stream().map(bookConverter::convertToDto).toList();
+        return toResources(bookRepository.findAll());
     }
 
-    @PostConstruct
-    public void post() {
-        if (bookRepository.findAll().isEmpty()) {
-            BookEntity book1 = new BookEntity();
-            book1.setAuthor("author1");
-            book1.setTitle("title");
-            bookRepository.save(book1);
-            BookEntity book2 = new BookEntity();
-            book2.setAuthor("author2");
-            book2.setTitle("title asdfadsf");
-            bookRepository.save(book2);
-        }
+    @GetMapping("/{bookId}")
+    public BookResource getBook(@PathVariable Long bookId) {
+        return toResource(bookRepository.getReferenceById(bookId));
     }
+
+    @GetMapping("/search")
+    public List<BookResource> searchBooks(@RequestParam String searchTerm) {
+        return toResources(bookRepository.searchBooks(searchTerm));
+    }
+
+    private List<BookResource> toResources(List<BookEntity> books) {
+        return books.stream().map(bookConverter::convertToResource).toList();
+    }
+
+    private BookResource toResource(BookEntity book) {
+        return bookConverter.convertToResource(book);
+    }
+
+
 }

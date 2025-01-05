@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Book {
-  id?: number;
+  id: number;
   title: string;
   author: string;
 }
@@ -18,6 +18,10 @@ export class BookService {
 
   getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(this.apiUrl, {withCredentials: true});
+  }
+
+  search(searchTerm: string): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.apiUrl}/search?searchTerm=${searchTerm}`, {withCredentials: true});
   }
 
   addBook(book: Book): Observable<Book> {

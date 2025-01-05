@@ -10,7 +10,8 @@
 
 <ul>
   @for (book of books; track book.title) {
-    <strong>{{ book.title }}</strong> by {{ book.author }}
-
+    <p>
+      <a [routerLink]="['/book', book.id]">{{ book.title }}</a> by {{ book.author }}
+    </p>
   }
 </ul>

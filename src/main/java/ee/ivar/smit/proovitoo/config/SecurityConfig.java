@@ -27,7 +27,6 @@ public class SecurityConfig {
                             auth.requestMatchers(HttpMethod.OPTIONS, "api/**").permitAll();//allow CORS option calls
                             auth.requestMatchers("api/**").authenticated();
                         }
-
                 )
                 .addFilter(corsFilter())
                 .oauth2ResourceServer(oauth2 -> oauth2

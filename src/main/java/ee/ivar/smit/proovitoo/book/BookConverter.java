@@ -10,7 +10,7 @@ public class BookConverter {
 
     private final ModelMapper modelMapper;
 
-    public BookResource convertToDto(BookEntity entity) {
+    public BookResource convertToResource(BookEntity entity) {
         return modelMapper.map(entity, BookResource.class);
 
     }
