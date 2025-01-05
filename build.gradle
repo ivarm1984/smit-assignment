@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.netflix.nebula.integtest' version '11.0.0'
 }
 
 group = 'ee.ivar'
@@ -24,6 +25,9 @@ repositories {
 }
 
 dependencies {
+	annotationProcessor 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -37,16 +41,32 @@ dependencies {
 	implementation 'org.apache.logging.log4j:log4j-api:2.24.3'
 	implementation 'org.apache.logging.log4j:log4j-core:2.24.3'
 
-	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
 	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
+	testImplementation 'org.assertj:assertj-core:3.27.2'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+	integTestImplementation 'org.springframework.boot:spring-boot-starter-test'
+	integTestImplementation 'org.springframework.security:spring-security-test'
+
+}
+tasks.withType(Test).configureEach {
+	// Disable up-to-date check for all test tasks
+	outputs.upToDateWhen { false }
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }
+
+integrationTest {
+	useJUnitPlatform()
+}
+
+
+check.dependsOn integrationTest
