@@ -24,7 +24,6 @@ public class SecurityConfig {
         http
                 .securityMatcher("/api/**")
                 .authorizeHttpRequests(auth -> {
-                            auth.requestMatchers(HttpMethod.OPTIONS, "api/**").permitAll();//allow CORS option calls
                             auth.requestMatchers("api/**").authenticated();
                         }
                 )
