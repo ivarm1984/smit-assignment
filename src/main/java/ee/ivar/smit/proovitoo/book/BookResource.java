@@ -15,4 +15,5 @@ public class BookResource {
     private Long id;
     private String title;
     private String author;
+    private boolean belongsToUser;
 }

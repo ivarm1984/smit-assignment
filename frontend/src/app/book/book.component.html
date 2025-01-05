@@ -3,3 +3,7 @@
 {{bookId}}
 
 <strong>{{book.title}}</strong> - {{book.author}}
+
+@if (book.belongsToUser) {
+  <button (click)="deleteBook()">Delete book</button>
+}

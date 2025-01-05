@@ -1,7 +1,9 @@
 package ee.ivar.smit.proovitoo.book;
 
+import ee.ivar.smit.proovitoo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,10 +11,15 @@ import org.springframework.stereotype.Component;
 public class BookConverter {
 
     private final ModelMapper modelMapper;
+    private final UserService userService;
 
     public BookResource convertToResource(BookEntity entity) {
-        return modelMapper.map(entity, BookResource.class);
+        BookResource resource = modelMapper.map(entity, BookResource.class);
 
+        if (entity.getUser().getId().equals(userService.getCurrentUser().getId())) {
+            resource.setBelongsToUser(true);
+        }
+        return resource;
     }
 
     public BookEntity convertToEntity(BookResource resource) {

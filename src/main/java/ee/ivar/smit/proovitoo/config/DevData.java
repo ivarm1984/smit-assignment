@@ -1,25 +1,35 @@
 package ee.ivar.smit.proovitoo.config;
 
+import ee.ivar.smit.proovitoo.book.BookEntity;
+import ee.ivar.smit.proovitoo.book.BookRepository;
+import ee.ivar.smit.proovitoo.user.UserService;
 import jakarta.annotation.PostConstruct;
+import jakarta.ws.rs.core.Response;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.representations.idm.ClientRepresentation;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RealmRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Profile("dev-keycloak")
-@Configuration
+@Profile("dev-data")
+@Component
 @Log4j2
-public class KeycloakConfig {
+@RequiredArgsConstructor
+public class DevData {
+
+    private final BookRepository bookRepository;
+    private final UserService userService;
 
     @PostConstruct
-    public void createClient() {
+    public void postConstruct() {
         log.info("Setting up keycloak");
         Keycloak keycloak = KeycloakBuilder.builder()
                 .serverUrl("http://localhost:7080")
@@ -53,7 +63,8 @@ public class KeycloakConfig {
         user.setEnabled(true);
         user.setRealmRoles(List.of("user"));
 
-        keycloak.realm("books").users().create(user);
+        Response response = keycloak.realm("books").users().create(user);
+        String user1Sub = String.valueOf(response.getMetadata().get("Location")).split("users/")[1].split("]")[0];
 
         UserRepresentation user2 = new UserRepresentation();
         user2.setUsername("demo2");
@@ -64,7 +75,8 @@ public class KeycloakConfig {
         user2.setEnabled(true);
         user2.setRealmRoles(List.of("user"));
 
-        keycloak.realm("books").users().create(user2);
+        Response response2 = keycloak.realm("books").users().create(user2);
+        String user2Sub = String.valueOf(response2.getMetadata().get("Location")).split("users/")[1].split("]")[0];
 
         ClientRepresentation client = new ClientRepresentation();
         client.setClientId("books-app");
@@ -75,6 +87,20 @@ public class KeycloakConfig {
         client.setWebOrigins(List.of("*"));
         client.setProtocol("openid-connect");
         keycloak.realm("books").clients().create(client);
+
+        if (bookRepository.findAll().isEmpty()) {
+            BookEntity book1 = new BookEntity();
+            book1.setAuthor("author1");
+            book1.setTitle("title");
+            book1.setUser(userService.getUserBySub(user1Sub));
+            bookRepository.save(book1);
+
+            BookEntity book2 = new BookEntity();
+            book2.setAuthor("author2");
+            book2.setTitle("title asdfadsf");
+            book2.setUser(userService.getUserBySub(user2Sub));
+            bookRepository.save(book2);
+        }
     }
 
     private static boolean booksRealmExists(Keycloak keycloak) {

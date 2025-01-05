@@ -1,9 +1,11 @@
 package ee.ivar.smit.proovitoo.book;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,7 @@ public class BooksController {
 
     private final BookRepository bookRepository;
     private final BookConverter bookConverter;
+    private final BookService bookService;
 
     @GetMapping
     public List<BookResource> getBooks() {
@@ -26,6 +29,16 @@ public class BooksController {
     @GetMapping("/{bookId}")
     public BookResource getBook(@PathVariable Long bookId) {
         return toResource(bookRepository.getReferenceById(bookId));
+    }
+
+    @DeleteMapping("/{bookId}")
+    public void deleteBook(@PathVariable Long bookId) {
+        bookService.delete(bookId);
+    }
+
+    @PostMapping
+    public BookResource addBook(@RequestBody  BookResource book) {
+        return toResource(bookService.addBook(book));
     }
 
     @GetMapping("/search")

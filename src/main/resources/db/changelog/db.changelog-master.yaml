@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
+      file: db/changelog/changeset/user.sql
+  - include:
       file: db/changelog/changeset/book.sql

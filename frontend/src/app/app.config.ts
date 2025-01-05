@@ -5,6 +5,8 @@ import { initializeKeycloak } from './keycloak-init';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { AuthInterceptor } from './auth.interceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
@@ -19,5 +21,6 @@ export const appConfig: ApplicationConfig = {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
             multi: true,
-          },]
+          }, provideAnimations(),
+                provideToastr(),]
 };

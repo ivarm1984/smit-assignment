@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Book {
-  id: number;
+  id?: number;
   title: string;
   author: string;
+  belongsToUser?: boolean;
 }
 
 @Injectable({
@@ -28,7 +29,7 @@ export class BookService {
     return this.http.post<Book>(this.apiUrl, book);
   }
 
-  removeBook(id: number): Observable<void> {
+  delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
