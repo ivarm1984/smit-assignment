@@ -23,7 +23,7 @@ To run the project locally:
    ```bash
     docker compose up -d
 
-5. Open https://localhost:4200 and log in with demo users and try lending. User:Password
+5. Open http://localhost:4200 and log in with demo users and try lending. User:Password
    * demo1:1234
    * demo2:1234
 
