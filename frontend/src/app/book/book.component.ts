@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
-import { BookService, Book } from '../service/book.service';
-import { LendingService, Lending } from '../service/lending.service';
-import { HttpClientModule, HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import {Component} from '@angular/core';
+import {Book, BookService} from '../service/book.service';
+import {LendingService} from '../service/lending.service';
+import {HttpClientModule, HttpErrorResponse} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-book',
@@ -17,10 +16,11 @@ export class BookComponent {
   book!: Book;
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private lendingService: LendingService,
-    private bookService: BookService,
-    private toastr: ToastrService) {}
+              private router: Router,
+              private lendingService: LendingService,
+              private bookService: BookService,
+              private toastr: ToastrService) {
+  }
 
   ngOnInit(): void {
     this.bookId = Number(this.route.snapshot.paramMap.get('id')!);
@@ -32,25 +32,25 @@ export class BookComponent {
 
   lendBook() {
     this.lendingService.lend(this.book.id!).subscribe({
-     next: () => {
-       this.toastr.success('Book lending successful!');
-       this.router.navigate(['lendings']);
-     },
-     error: (err) => {
-       this.toastr.error(`Failed to delete book with id ${this.book.id}`);
-     }
-   });
+      next: () => {
+        this.toastr.success('Book lending successful!');
+        this.router.navigate(['lendings']);
+      },
+      error: (err) => {
+        this.toastr.error(`Failed to delete book with id ${this.book.id}`);
+      }
+    });
   }
 
   deleteBook() {
     this.bookService.delete(this.book.id!).subscribe({
-     next: () => {
-       console.log(`Book with id ${this.book.id!} deleted successfully`);
-       this.router.navigate(['']);
-     },
-     error: (err) => {
-       this.toastr.error(`Failed to delete book with id ${this.book.id!}`);
-     }
-   });
+      next: () => {
+        console.log(`Book with id ${this.book.id!} deleted successfully`);
+        this.router.navigate(['']);
+      },
+      error: (err) => {
+        this.toastr.error(`Failed to delete book with id ${this.book.id!}`);
+      }
+    });
   }
 }

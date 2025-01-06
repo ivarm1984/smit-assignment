@@ -13,7 +13,6 @@ import static ee.ivar.smit.proovitoo.lending.LendingStatus.RECEIVED
 import static ee.ivar.smit.proovitoo.lending.LendingStatus.GIVEN_BACK
 import static ee.ivar.smit.proovitoo.lending.LendingStatus.GOT_BACK
 
-
 class LendingUpdateValidatorTest extends Specification {
 
     private userService = Mock UserService

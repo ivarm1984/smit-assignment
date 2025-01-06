@@ -1,8 +1,8 @@
 <p>book works!</p>
 
-{{bookId}}
+{{ bookId }}
 
-<strong>{{book.title}}</strong> - {{book.author}}
+<strong>{{ book.title }}</strong> - {{ book.author }}
 
 @if (book.belongsToUser) {
   <button (click)="deleteBook()">Delete book</button>

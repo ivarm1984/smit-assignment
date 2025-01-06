@@ -1,25 +1,20 @@
 <ul>
   @for (lending of lendings; track lending.id) {
-  <p>
-    {{ lending.book.title }} - {{lending.book.author}}  {{ lending.status }}
-    @if (canDelete(lending.id)) {
-      <button (click)="updateStatus(lending.id, LendingStatus.DELETED)">Delete</button>
-    }
-    @if (canCancel(lending.id)) {
+    <p>
+      {{ lending.book.title }} - {{ lending.book.author }}  {{ lending.status }}
+      @if (canDelete(lending.id)) {
+        <button (click)="updateStatus(lending.id, LendingStatus.DELETED)">Delete</button>
+      } @if (canCancel(lending.id)) {
       <button (click)="updateStatus(lending.id, LendingStatus.CANCELLED)">Cancel</button>
-    }
-    @if (cenSetToLent(lending.id)) {
+    } @if (cenSetToLent(lending.id)) {
       <button (click)="updateStatus(lending.id, LendingStatus.LENT_OUT)">Lent</button>
-    }
-    @if (canSetToReceived(lending.id)) {
+    } @if (canSetToReceived(lending.id)) {
       <button (click)="updateStatus(lending.id, LendingStatus.RECEIVED)">Received</button>
-    }
-    @if (canSetToGivenBack(lending.id)) {
+    } @if (canSetToGivenBack(lending.id)) {
       <button (click)="updateStatus(lending.id, LendingStatus.GIVEN_BACK)">Given back</button>
-    }
-    @if (canSetToGotBack(lending.id)) {
+    } @if (canSetToGotBack(lending.id)) {
       <button (click)="updateStatus(lending.id, LendingStatus.GOT_BACK)">Got back</button>
     }
-  </p>
+    </p>
   }
 </ul>

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Book } from '../service/book.service';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {Book} from '../service/book.service';
 
 export enum LendingStatus {
   BOOKED = 'BOOKED',
@@ -12,6 +12,7 @@ export enum LendingStatus {
   GIVEN_BACK = 'GIVEN_BACK',
   GOT_BACK = 'GOT_BACK'
 }
+
 export interface Lending {
   id: number;
   book: Book;
@@ -27,7 +28,8 @@ export interface Lending {
 export class LendingService {
   private readonly apiUrl = 'http://localhost:8080/api/lendings';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getLendings(): Observable<Lending[]> {
     return this.http.get<Lending[]>(this.apiUrl);

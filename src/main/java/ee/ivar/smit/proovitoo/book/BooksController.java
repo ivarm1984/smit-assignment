@@ -36,7 +36,7 @@ public class BooksController {
     }
 
     @PostMapping
-    public BookResource addBook(@RequestBody  BookResource book) {
+    public BookResource addBook(@RequestBody BookResource book) {
         log.info("Adding book {} - {}", book.getTitle(), book.getAuthor());
         return toResource(bookService.addBook(book));
     }

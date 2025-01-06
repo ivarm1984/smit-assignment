@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { LendingService, Lending, LendingStatus } from '../service/lending.service';
-import { BookService, Book } from '../service/book.service';
-import { HttpClientModule, HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
+import {Component, OnInit} from '@angular/core';
+import {Lending, LendingService, LendingStatus} from '../service/lending.service';
+import {BookService} from '../service/book.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-book-activity',
@@ -17,7 +17,8 @@ export class BookActivityComponent implements OnInit {
   constructor(
     private lendingService: LendingService,
     private bookService: BookService,
-    private toastr: ToastrService) {}
+    private toastr: ToastrService) {
+  }
 
   ngOnInit(): void {
     this.getLendings();
@@ -65,14 +66,14 @@ export class BookActivityComponent implements OnInit {
   }
 
   updateStatus(lendingId: number, status: LendingStatus) {
-      this.lendingService.setLendingStatus(lendingId, status).subscribe(
-       () => {
-         this.toastr.success('Book status updated');
-         this.getLendings();
-       },
-       (err: HttpErrorResponse) => {
-         this.toastr.error('Error fetching lendings');
-       }
-     );
-   }
+    this.lendingService.setLendingStatus(lendingId, status).subscribe(
+      () => {
+        this.toastr.success('Book status updated');
+        this.getLendings();
+      },
+      (err: HttpErrorResponse) => {
+        this.toastr.error('Error fetching lendings');
+      }
+    );
+  }
 }

@@ -3,7 +3,6 @@ package ee.ivar.smit.proovitoo.book;
 import ee.ivar.smit.proovitoo.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
