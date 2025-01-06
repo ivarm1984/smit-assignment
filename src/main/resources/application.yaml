@@ -16,8 +16,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:7080/auth/realms/books
-          jwk-set-uri: http://localhost:7080/realms/books/protocol/openid-connect/certs
+          issuer-uri: http://${KEYCLOAK_HOST:localhost}:7080/auth/realms/books
+          jwk-set-uri: http://${KEYCLOAK_HOST:localhost}:7080/realms/books/protocol/openid-connect/certs
 
 springdoc:
   api-docs.path: /v3/api-docs

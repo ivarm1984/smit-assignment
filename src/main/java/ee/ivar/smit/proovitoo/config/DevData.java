@@ -7,7 +7,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.StringUtils;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.representations.idm.ClientRepresentation;
@@ -31,8 +30,12 @@ public class DevData {
     @PostConstruct
     public void postConstruct() {
         log.info("Setting up keycloak dev data");
+        String keycloakHost = System.getenv("KEYCLOAK_HOST");
+        if (keycloakHost == null) {
+            keycloakHost = "localhost";
+        }
         Keycloak keycloak = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:7080")
+                .serverUrl("http://" + keycloakHost + ":7080")
                 .realm("master")
                 .clientId("admin-cli")
                 .username("admin")

@@ -7,6 +7,8 @@ services:
       - 'POSTGRES_USER=myuser'
     ports:
       - '53447:5432'
+    networks:
+      - proovitoo_network
   keycloak_web:
     image: quay.io/keycloak/keycloak:24.0
     container_name: keycloak_web
@@ -25,7 +27,29 @@ services:
       - '7080:7080'
       - '7443:7443'
     networks:
-      - local_network
+      - proovitoo_network
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres
+      - keycloak_web
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/books
+      - KEYCLOAK_HOST=keycloak_web
+    networks:
+      - proovitoo_network
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "4200:4200"
+    networks:
+      - proovitoo_network
 networks:
-  local_network:
+  proovitoo_network:
     driver: bridge

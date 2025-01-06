@@ -71,5 +71,4 @@ integrationTest {
 	useJUnitPlatform()
 }
 
-
 check.dependsOn integrationTest
