@@ -2,7 +2,10 @@ package ee.ivar.smit.proovitoo;
 
 import ee.ivar.smit.proovitoo.book.BookEntity;
 import ee.ivar.smit.proovitoo.book.BookRepository;
+import ee.ivar.smit.proovitoo.user.UserEntity;
+import ee.ivar.smit.proovitoo.user.UserRepository;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +21,18 @@ public class BookRepositoryIntegTest {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    private UserEntity user;
+
+    @BeforeEach
+    void beforeEach() {
+        user = new UserEntity();
+        user.setSub("123");
+        userRepository.save(user);
+    }
 
     @Test
     void shouldFindBooksByTitle() {
@@ -46,6 +61,10 @@ public class BookRepositoryIntegTest {
     }
 
     private void insertBook(String title, String author) {
-        bookRepository.save(BookEntity.builder().author(author).title(title).build());
+        bookRepository.save(BookEntity.builder()
+                .author(author)
+                .title(title)
+                .user(user)
+                .build());
     }
 }
