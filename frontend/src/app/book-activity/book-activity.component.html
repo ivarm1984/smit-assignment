@@ -1,20 +1,34 @@
-<ul>
+<ul class="list-group mt-4">
   @for (lending of lendings; track lending.id) {
-    <p>
-      {{ lending.book.title }} - {{ lending.book.author }}  {{ lending.status }}
+  <li class="list-group-item d-flex justify-content-between align-items-start">
+    <div class="ms-2 me-auto">
+      <div class="fw-bold">{{ lending.book.title }}</div>
+      <small class="text-muted">{{ lending.book.author }}</small>
+      <div class="mt-1">Status: <span class="badge bg-info text-dark">{{ lending.status }}</span></div>
+    </div>
+    <div class="btn-group" role="group" aria-label="Lending actions">
       @if (canDelete(lending.id)) {
-        <button (click)="updateStatus(lending.id, LendingStatus.DELETED)">Delete</button>
-      } @if (canCancel(lending.id)) {
-      <button (click)="updateStatus(lending.id, LendingStatus.CANCELLED)">Cancel</button>
-    } @if (cenSetToLent(lending.id)) {
-      <button (click)="updateStatus(lending.id, LendingStatus.LENT_OUT)">Lent</button>
-    } @if (canSetToReceived(lending.id)) {
-      <button (click)="updateStatus(lending.id, LendingStatus.RECEIVED)">Received</button>
-    } @if (canSetToGivenBack(lending.id)) {
-      <button (click)="updateStatus(lending.id, LendingStatus.GIVEN_BACK)">Given back</button>
-    } @if (canSetToGotBack(lending.id)) {
-      <button (click)="updateStatus(lending.id, LendingStatus.GOT_BACK)">Got back</button>
-    }
-    </p>
+      <button class="btn btn-danger btn-sm" (click)="updateStatus(lending.id, LendingStatus.DELETED)">Delete</button>
+      }
+      @if (canCancel(lending.id)) {
+      <button class="btn btn-secondary btn-sm" (click)="updateStatus(lending.id, LendingStatus.CANCELLED)">Cancel
+      </button>
+      }
+      @if (cenSetToLent(lending.id)) {
+      <button class="btn btn-primary btn-sm" (click)="updateStatus(lending.id, LendingStatus.LENT_OUT)">Lent</button>
+      }
+      @if (canSetToReceived(lending.id)) {
+      <button class="btn btn-success btn-sm" (click)="updateStatus(lending.id, LendingStatus.RECEIVED)">Received
+      </button>
+      }
+      @if (canSetToGivenBack(lending.id)) {
+      <button class="btn btn-warning btn-sm" (click)="updateStatus(lending.id, LendingStatus.GIVEN_BACK)">Given back
+      </button>
+      }
+      @if (canSetToGotBack(lending.id)) {
+      <button class="btn btn-info btn-sm" (click)="updateStatus(lending.id, LendingStatus.GOT_BACK)">Got back</button>
+      }
+    </div>
+  </li>
   }
 </ul>

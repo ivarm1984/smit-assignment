@@ -1,15 +1,30 @@
-<form [formGroup]="searchForm" (ngSubmit)="search()">
-  <label>
-    <input type="text" formControlName="searchTerm"/>
-  </label>
-  <button type="submit">Search</button>
+<form [formGroup]="searchForm" (ngSubmit)="search()" class="mb-4">
+  <div class="input-group">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search books..."
+      formControlName="searchTerm"
+    />
+    <button type="submit" class="btn btn-primary">Search</button>
+  </div>
 </form>
 
+<hr />
 
-<ul>
+<table class="table table-hover">
+  <thead class="table-light">
+  <tr>
+    <th scope="col">Title</th>
+    <th scope="col">Author</th>
+  </tr>
+  </thead>
+  <tbody>
   @for (book of books; track book.title) {
-    <p>
-      <a [routerLink]="['/book', book.id]">{{ book.title }}</a> by {{ book.author }}
-    </p>
+  <tr>
+    <td><a [routerLink]="['/book', book.id]" class="text-decoration-none">{{ book.title }}</a></td>
+    <td>{{ book.author }}</td>
+  </tr>
   }
-</ul>
+  </tbody>
+</table>

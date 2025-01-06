@@ -1,11 +1,14 @@
-<p>book works!</p>
+<div class="flex-grow-1">
+  <div class="text-center mb-3">
+    <strong class="d-block">{{ book.title }}</strong>
+    <span class="text-muted d-block">{{ book.author }}</span>
+  </div>
 
-{{ bookId }}
-
-<strong>{{ book.title }}</strong> - {{ book.author }}
-
-@if (book.belongsToUser) {
-  <button (click)="deleteBook()">Delete book</button>
-} @else {
-  <button (click)="lendBook()">Lend book</button>
-}
+  <div class="text-center">
+    @if (book.belongsToUser) {
+    <button class="btn btn-danger btn-sm" (click)="deleteBook()">Delete book</button>
+    } @else {
+    <button class="btn btn-warning btn-sm" (click)="lendBook()">Lend book</button>
+    }
+  </div>
+</div>
