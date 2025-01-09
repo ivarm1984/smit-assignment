@@ -17,7 +17,7 @@ import static ee.ivar.smit.proovitoo.lending.LendingStatus.GOT_BACK;
 @RequiredArgsConstructor
 public class LendingService {
 
-    public static final int DEFAULT_LENDING_IN_DAYS = 40;
+    public static final int DEFAULT_LENDING_IN_DAYS = 28;
     public static final List<LendingStatus> FINAL_STATUSES = List.of(CANCELLED, DELETED, GOT_BACK);
 
     private final UserService userService;
